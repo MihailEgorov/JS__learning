@@ -1,14 +1,14 @@
 "use strict";
 
-let expenses1, 
-expenses2, 
-amount1, 
-amount2, 
-moneyMonth,
-targetMonth, 
-mission1,
-res,
-budgetDay;
+let expenses1;
+let expenses2; 
+let amount1; 
+let amount2; 
+let moneyMonth;
+let targetMonth; 
+let mission1;
+let res;
+let budgetDay;
 
 
 let money = 10000;
@@ -55,9 +55,9 @@ const getStatusIncome = function(budgetDay){
     switch (true) {
         case budgetDay > 1200:
             return("У вас высокий уровень дохода");
-        case (600 < budgetDay) && (budgetDay < 1200):
+        case ( 600 < budgetDay ) && ( budgetDay < 1200 ):
             return("У вас средний уровень дохода");
-        case 0 < budgetDay < 600:
+        case ( 0 < budgetDay ) && ( budgetDay < 600):
             return("К сожалению у вас уровень дохода ниже среднего");
         case budgetDay < 0:
             return("Что то пошло не так");
