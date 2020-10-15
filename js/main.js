@@ -1,11 +1,11 @@
 "use strict";
 
-let money = 10000;
-let income = "нет";
-let addExpenses = "Интернет, Такси, Коммуналка";
-let deposit = true;
-let mission = 100000;
-let period = 12;
+let money = 10000,
+    income = "нет",
+    addExpenses = "Интернет, Такси, Коммуналка",
+    deposit = true,
+    mission = 100000,
+    period = 12;
 
 console.log( typeof(money) );
 console.log( typeof(income) );
@@ -18,20 +18,20 @@ console.log( addExpenses.toLocaleLowerCase().split(", ") );
 
 
 let budgetDay = money / 30; 
-money = prompt("Ваш месячный доход?");
-addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-deposit = confirm("Есть ли у вас депозит в банке?");
+    money = prompt("Ваш месячный доход?");
+    addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
+    deposit = confirm("Есть ли у вас депозит в банке?");
 
 
-let expenses1 = prompt("Введите обязательную статью расходов?");
-let amount1 = prompt("Во сколько это обойдется?");
-let expenses2 = prompt("Введите обязательную статью расходов?");
-let amount2 = prompt("Во сколько это обойдется?");
+let expenses1 = prompt("Введите обязательную статью расходов?"),
+    amount1 = prompt("Во сколько это обойдется?"),
+    expenses2 = prompt("Введите обязательную статью расходов?"),
+    amount2 = prompt("Во сколько это обойдется?");
 
 
-let budgetMonth = money - ( Number(amount1)  + Number(amount2) );
-let mission1 = Math.ceil(mission / budgetMonth);
-budgetDay = Math.floor(budgetMonth / 30);
+let budgetMonth = money - ( Number(amount1)  + Number(amount2) ),
+    mission1 = Math.ceil(mission / budgetMonth);
+    budgetDay = Math.floor(budgetMonth / 30);
 
 
 console.log( "бюджет на месяц", budgetMonth );
@@ -40,10 +40,10 @@ console.log('Бюджеть на день: ', budgetDay);
 
 
 switch (true) {
-    case budgetDay > 1200:
+    case ( budgetDay >= 1200 ):
         console.log("У вас высокий уровень дохода");
         break;
-    case (600 < budgetDay) && (budgetDay < 1200):
+    case  (600 <= budgetDay) && (budgetDay < 1200):
         console.log("У вас средний уровень дохода");
         break;
     case (0 < budgetDay) && (budgetDay < 600):
@@ -51,14 +51,8 @@ switch (true) {
         break;
     case budgetDay < 0:
         console.log("Что то пошло не так");
-        break;
-    case budgetDay === 1200:
-        console.log("У вас высокий уровень дохода");
-        break;    
-    case budgetDay === 600:
-        console.log("У вас средний уровень дохода");
-        break;        
+        break;       
     case budgetDay === 0:
-        console.log("К сожалению у вас уровень дохода ниже среднего");
+        console.log("Прикладывай чуть больше усилий и у тебя все получится))");
         break;
 }
