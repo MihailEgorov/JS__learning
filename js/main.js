@@ -1,32 +1,24 @@
 "use strict";
 
-let expenses1;
-let expenses2; 
-let amount1; 
-let amount2; 
-let moneyMonth;
-let targetMonth; 
-let mission1;
-let res;
-let budgetDay;
+
+let moneyMonth,
+    targetMonth, 
+    res;
 
 
-let money = 10000;
 let income = "нет";
-let addExpenses = "Интернет, Такси, Коммуналка";
-let deposit = true;
 let mission = 100000;
 let period = 12;
 
 
-money = prompt("Ваш месячный доход?");
-addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-deposit = confirm("Есть ли у вас депозит в банке?");
+let money = prompt("Ваш месячный доход?");
+let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
+let deposit = confirm("Есть ли у вас депозит в банке?");
 
-expenses1 = prompt("Введите обязательную статью расходов?");
-amount1 = prompt("Во сколько это обойдется?");
-expenses2 = prompt("Введите обязательную статью расходов?");
-amount2 = prompt("Во сколько это обойдется?");
+let expenses1 = prompt("Введите обязательную статью расходов?");
+let amount1 = prompt("Во сколько это обойдется?");
+let expenses2 = prompt("Введите обязательную статью расходов?");
+let amount2 = prompt("Во сколько это обойдется?");
 
 
 function getExpensesMonth(amount1, amount2) {
@@ -45,7 +37,7 @@ function getAccumulatedMonth(money, amount1, amount2) {
 
 function getTargetMonth(mission, accumulatedMonth) {
     
-    targetMonth = mission / accumulatedMonth;
+    targetMonth = Math.ceil(mission / accumulatedMonth); 
     return targetMonth;
     
 }
@@ -55,37 +47,39 @@ const getStatusIncome = function(budgetDay){
     switch (true) {
         case budgetDay > 1200:
             return("У вас высокий уровень дохода");
-        case ( 600 < budgetDay ) && ( budgetDay < 1200 ):
+        case ( 600 <= budgetDay ) && ( budgetDay <= 1200 ):
             return("У вас средний уровень дохода");
         case ( 0 < budgetDay ) && ( budgetDay < 600):
             return("К сожалению у вас уровень дохода ниже среднего");
         case budgetDay < 0:
             return("Что то пошло не так");
-        case budgetDay === 1200:
-            return("У вас высокий уровень дохода");
-        case budgetDay === 600:
-            return("У вас средний уровень дохода");
         case budgetDay === 0:
-            return("К сожалению у вас уровень дохода ниже среднего");
+            return("Трудись и у тебя все получится))");
     }
 
 };
 
-const showTypeOf = function(res, addExpenses, moneyMonth, targetMonth, budgetDay, getStatusIncome){
+const showTypeOf = function(money, income, deposit, res, 
+                            addExpenses, moneyMonth, targetMonth,
+                            budgetDay, getStatusIncome){
+
+    console.log( money, typeof( money ) );
+    console.log( income, typeof( income ) );
+    console.log( deposit, typeof( deposit ) );
+    console.log(  income.length  );
 
     console.log("Месячные расходы составляют" + " " + res + " " + "рублей");
     console.log('Возможные расходы за рассчитываемый период: ', addExpenses.split(", "));
     console.log("Месячные накопления составляют" + " " + moneyMonth + " " + "рублей");
     console.log('Цель будет достигнута через:' + " " + targetMonth + " " + "месяцев");
     console.log('Бюджеть на день: ', budgetDay);
-    console.log(getStatusIncome());
+    console.log(getStatusIncome( budgetDay ));
 };
 
 getExpensesMonth(amount1, amount2);
 const accumulatedMonth = getAccumulatedMonth(money, amount1, amount2);
 getTargetMonth(mission, accumulatedMonth);
 
-budgetDay = Math.floor(accumulatedMonth / 30);
+let budgetDay = Math.floor( accumulatedMonth / 30 );
 
-getStatusIncome(budgetDay);
-showTypeOf(res, addExpenses, moneyMonth, targetMonth, budgetDay, getStatusIncome);
+showTypeOf(money, income, deposit, res, addExpenses, moneyMonth, targetMonth, budgetDay, getStatusIncome);
