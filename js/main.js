@@ -1,26 +1,22 @@
 "use strict";
 
-let money = 10000,
-    income = "нет",
-    addExpenses = "Интернет, Такси, Коммуналка",
-    deposit = true,
+
+let income = "нет",
     mission = 100000,
     period = 12;
+
+let money = prompt("Ваш месячный доход?"),
+    addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую"),
+    deposit = confirm("Есть ли у вас депозит в банке?");
 
 console.log( typeof(money) );
 console.log( typeof(income) );
 console.log( typeof(deposit) );
 console.log( addExpenses.length );
+
 console.log( "\"Период равен" + " " + period + " " + "месяцев\"" );
 console.log( "Цель заработать" + " " + mission + " " + "рублей" );
 console.log( addExpenses.toLocaleLowerCase().split(", ") );
-
-
-
-let budgetDay = money / 30; 
-    money = prompt("Ваш месячный доход?");
-    addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-    deposit = confirm("Есть ли у вас депозит в банке?");
 
 
 let expenses1 = prompt("Введите обязательную статью расходов?"),
@@ -30,7 +26,7 @@ let expenses1 = prompt("Введите обязательную статью р�
 
 
 let budgetMonth = money - ( Number(amount1)  + Number(amount2) ),
-    mission1 = Math.ceil(mission / budgetMonth);
+    mission1 = Math.ceil(mission / budgetMonth),
     budgetDay = Math.floor(budgetMonth / 30);
 
 
