@@ -1,71 +1,70 @@
 "use strict";
 
+let isNumber = function(n){
 
-let moneyMonth,
-    targetMonth, 
-    res;
-let expenses = [];
-
-let income = "нет";
-let mission = 100000;
-let period = 12;
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
 
-let money;
+
+let income = "нет",
+    mission = 100000,
+    money,
+    expenses = [];
+
 
 let start = function(){
 
-   money = prompt("Ваш месячный доход?");
+    do {
 
-   while ( isNaN(parseFloat( money ))  ) {
-       money = prompt("Ваш месячный доход?");
-   }
+        money = prompt("Ваш месячный доход?");
+
+    } while (!isNumber(money));
 
 };
-start();    
 
-
+start();
 
 
 let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую"),
     deposit = confirm("Есть ли у вас депозит в банке?");
-
-// let expenses1 = prompt("Введите обязательную статью расходов?");
-// let amount1 = prompt("Во сколько это обойдется?");
-// let expenses2 = prompt("Введите обязательную статью расходов?");
-// let amount2 = prompt("Во сколько это обойдется?");
-
+    
 
 
 function getExpensesMonth() {
 
-    var sum = 0;
+    let sum = 0;
+    let tmp = "";
 
     for (let i = 0; i < 2; i++) {
         
         expenses[i] = prompt("Введите обязательную статью расходов?");
-        sum += prompt("Во сколько это обойдется?");
-        
-    }
-    //res = Number(amount1) + Number(amount2);
-    return sum;
 
+        while (!isNumber(tmp)) {
+
+            tmp =  +prompt("Во сколько это обойдется?");
+
+        }
+
+        sum += tmp;
+        tmp = "";
+
+    }
+    return sum;
 }
 
 let expensesAmount = getExpensesMonth();
 
-function getAccumulatedMonth() {
+
+function getAccumulatedMonth(money) {
 
     return money - expensesAmount;
-
+   
 }
 
-let accumulatedMonth = getAccumulatedMonth();
-
-
 function getTargetMonth(mission, accumulatedMonth) {
-     
-    return Math.ceil(mission / accumulatedMonth);
+    
+    return Math.ceil(mission / accumulatedMonth); 
     
 }
 
@@ -79,33 +78,37 @@ const getStatusIncome = function(budgetDay){
         case ( 0 < budgetDay ) && ( budgetDay < 600):
             return("К сожалению у вас уровень дохода ниже среднего");
         case budgetDay < 0:
-            return("Что то пошло не так");
+            return("Возможно что то пошло не так");
         case budgetDay === 0:
             return("Трудись и у тебя все получится))");
     }
 
 };
 
-const showTypeOf = function(money, income, deposit, sum, 
-                            addExpenses, moneyMonth, targetMonth,
-                            budgetDay, getStatusIncome){
+const showTypeOf = function( budgetDay, expensesAmount, accumulatedMonth, getTargetMonth, getStatusIncome){
 
     console.log( money, typeof( money ) );
     console.log( income, typeof( income ) );
     console.log( deposit, typeof( deposit ) );
     console.log(  income.length  );
 
-    console.log("Месячные расходы составляют" + " " + sum + " " + "рублей");
+    console.log("Месячные расходы составляют" + " " + expensesAmount + " " + "рублей");
     console.log('Возможные расходы за рассчитываемый период: ', addExpenses.split(", "));
-    console.log("Месячные накопления составляют" + " " + moneyMonth + " " + "рублей");
-    console.log('Цель будет достигнута через:' + " " + targetMonth + " " + "месяцев");
+    console.log("Месячные накопления составляют" + " " + accumulatedMonth + " " + "рублей");
+
+    if (getTargetMonth(mission, accumulatedMonth) < 0) {
+        console.log('Цель не будет достигнута');
+    }else
+    {
+        console.log('Цель будет достигнута через:' + " " + getTargetMonth(mission, accumulatedMonth) + " " + "месяцев");
+    }
+    
     console.log('Бюджеть на день: ', budgetDay);
     console.log(getStatusIncome( budgetDay ));
 };
 
-getExpensesMonth();
-getTargetMonth(mission, accumulatedMonth);
 
+const accumulatedMonth = getAccumulatedMonth(money);
 let budgetDay = Math.floor( accumulatedMonth / 30 );
 
-showTypeOf(money, income, deposit, addExpenses, moneyMonth, targetMonth, budgetDay, getStatusIncome);
+showTypeOf( budgetDay, expensesAmount, accumulatedMonth, getTargetMonth, getStatusIncome);
