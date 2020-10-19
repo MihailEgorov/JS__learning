@@ -62,7 +62,7 @@ function getAccumulatedMonth(money) {
    
 }
 
-function getTargetMonth(mission, accumulatedMonth) {
+function getTargetMonth(accumulatedMonth) {
     
     return Math.ceil(mission / accumulatedMonth); 
     
@@ -96,11 +96,11 @@ const showTypeOf = function( budgetDay, expensesAmount, accumulatedMonth, getTar
     console.log('Возможные расходы за рассчитываемый период: ', addExpenses.split(", "));
     console.log("Месячные накопления составляют" + " " + accumulatedMonth + " " + "рублей");
 
-    if (getTargetMonth(mission, accumulatedMonth) < 0) {
+    if (getTargetMonth(accumulatedMonth) < 0) {
         console.log('Цель не будет достигнута');
     }else
     {
-        console.log('Цель будет достигнута через:' + " " + getTargetMonth(mission, accumulatedMonth) + " " + "месяцев");
+        console.log('Цель будет достигнута через:' + " " + getTargetMonth(accumulatedMonth) + " " + "месяцев");
     }
     
     console.log('Бюджеть на день: ', budgetDay);
