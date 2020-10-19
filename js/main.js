@@ -59,14 +59,14 @@ const showTypeOf = function( budgetDay, getExpensesMonth, accumulatedMonth, getT
     console.log("Месячные расходы составляют" + " " + getExpensesMonth(amount1, amount2) + " " + "рублей");
     console.log('Возможные расходы за рассчитываемый период: ', addExpenses.split(", "));
     console.log("Месячные накопления составляют" + " " + accumulatedMonth + " " + "рублей");
-    console.log('Цель будет достигнута через:' + " " + getTargetMonth(mission, accumulatedMonth) + " " + "месяцев");
+    console.log('Цель будет достигнута через:' + " " + getTargetMonth( accumulatedMonth) + " " + "месяцев");
     console.log('Бюджеть на день: ', budgetDay);
     console.log(getStatusIncome( budgetDay ));
 };
 
 getExpensesMonth(amount1, amount2);
-const accumulatedMonth = getAccumulatedMonth(money, amount1, amount2);
-getTargetMonth(mission, accumulatedMonth);
+const accumulatedMonth = getAccumulatedMonth();
+getTargetMonth( accumulatedMonth);
 
 let budgetDay = Math.floor( accumulatedMonth / 30 );
 
