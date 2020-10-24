@@ -42,7 +42,7 @@ function getExpensesMonth() {
 
         while (!isNumber(tmp)) {
 
-            tmp =  +prompt("Во сколько это обойдется?");
+            tmp =  prompt("Во сколько это обойдется?");
 
         }
 
