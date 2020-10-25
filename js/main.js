@@ -25,49 +25,55 @@ const showMessege = function(){
   alert("Давай сыграем в игру");
 
 };
-
 showMessege();
 
 let start = function(){
 
-   do {
+  do {
 
     num = prompt("Угадай число от 1 до 100");
+
+    if (!isNumber(num) && num !== null) {
+        alert("Введи число");
+    }
     
-    console.log('num: ', num);
-
+    if (num === null) {
+      break;
+    }
+      
   } while (!isNumber(num));
-  num = Number(num);
-
+  
 };
 
 
+const startGame = function(){
 
-const game = function(  ){
+  
 
-  for (let i = 0; i < 2; i++) {
-    
+  for (let i = 0; i < 3; i++) {
+
     start();
-
-    console.log(typeof num);
+    
     switch (true) {
+      case num === null:
+        alert("Игра окончена!!!");
+        return;
       case num < randomInteger:
         alert("Загаданное число больше");
         break;
       case num > randomInteger:
         alert("Загаданное число меньше");
         break;
-      case num === randomInteger:
+      case +num === randomInteger:
         alert("Поздравляю, Вы угадали!!!");
         return;
-        
-    default: alert("Что то пошло не так(");
-    break;
+      
+      default: alert("Что то пошло не так(");
+        break;
     }
-    
 
   }
 
 };
 
-game();
+startGame();
