@@ -46,7 +46,7 @@ function getExpensesMonth() {
 
         }
 
-        sum += tmp;
+        sum += Number(tmp);
         tmp = "";
 
     }
