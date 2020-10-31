@@ -11,6 +11,7 @@ let wraper = function(){
 
   let max = 99,
       min = 1,
+      iter,
       num;
 
   const getRandomInteger = function(min, max){
@@ -33,10 +34,14 @@ let wraper = function(){
 
 
   const startGame = function(){
-
+    
     alert("Давай сыграем в игру");
 
-    for (let i = 0; i < 3; i++) {
+    do {
+      iter = prompt("Сколько ты хочешь попыток?");
+    } while (!isNumber(iter));
+
+    for (let i = 0; i < iter; i++) {
 
       start();
       
@@ -65,8 +70,8 @@ let wraper = function(){
     alert("Вы исчерпали свое колличество попыток");
   };
 
-return startGame();
 
+return startGame();
 };
 
 
