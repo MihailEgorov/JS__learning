@@ -6,74 +6,68 @@ let isNumber = function(n){
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-let max = 99,
-    min = 1,
-    num;
 
-const getRandomInteger = function(min, max){
+let wraper = function(){
 
-  let random = Math.random() * (max - min) + min;
-  return Math.floor(random);
-};
+  let max = 99,
+      min = 1,
+      num;
 
-let randomInteger = getRandomInteger(min, max);
-console.log('randomInteger: ', randomInteger);
+  const getRandomInteger = function(min, max){
 
+    let random = Math.random() * (max - min) + min;
+    return Math.floor(random);
+  };
 
-const showMessege = function(){
+  let randomInteger = getRandomInteger(min, max);
+  console.log('randomInteger: ', randomInteger);
 
-  alert("Давай сыграем в игру");
-
-};
-showMessege();
-
-let start = function(){
-
-  do {
+  let start = function(){
 
     num = prompt("Угадай число от 1 до 100");
 
     if (!isNumber(num) && num !== null) {
         alert("Введи число");
     }
-    
-    if (num === null) {
-      break;
-    }
+  };
+
+
+  const startGame = function(){
+
+    alert("Давай сыграем в игру");
+
+    for (let i = 0; i < 3; i++) {
+
+      start();
       
-  } while (!isNumber(num));
+      switch (true) {
+        case num === null:
+          alert("Игра окончена!!!");
+          return;
+        case num < randomInteger:
+          alert("Загаданное число больше");
+          break;
+        case num > randomInteger:
+          alert("Загаданное число меньше");
+          break;
+        case +num === randomInteger:
+          alert("Поздравляю, Вы угадали!!!");
+          return;
+        case !isNumber(num) && num !== null:
+          continue;
+        
+        default: alert("Что то пошло не так(");
+          break;
+      }
   
+    }
+
+    alert("Вы исчерпали свое колличество попыток");
+  };
+
+return startGame();
+
 };
 
 
-const startGame = function(){
-
-  
-
-  for (let i = 0; i < 3; i++) {
-
-    start();
-    
-    switch (true) {
-      case num === null:
-        alert("Игра окончена!!!");
-        return;
-      case num < randomInteger:
-        alert("Загаданное число больше");
-        break;
-      case num > randomInteger:
-        alert("Загаданное число меньше");
-        break;
-      case +num === randomInteger:
-        alert("Поздравляю, Вы угадали!!!");
-        return;
-      
-      default: alert("Что то пошло не так(");
-        break;
-    }
-
-  }
-
-};
-
-startGame();
+wraper();
