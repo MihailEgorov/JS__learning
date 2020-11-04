@@ -22,7 +22,7 @@ let appData = {
   income: {},/*доп доходы */
   addIncome: [],/*дополнительные доходы  */
   expenses: {},/* дополнительные расходы*/
-  addExpenses: [],/*массив с вохможными расходами */
+  addExpenses: [],/*массив с возможными расходами */
   deposit: false,
   mission: 100000,
   period: 12,
@@ -30,8 +30,6 @@ let appData = {
   budgetMonth: 0, /*бюджет на месяц */
   expensesMonth: 0,/*расходы за месяц */
   expensesAmount: 0,
-  tmpAnswer: [],
-  tmpMoney: [],
 
   asking: function(){
 
@@ -40,24 +38,18 @@ let appData = {
         appData.deposit = confirm("Есть ли у вас депозит в банке?");
 
     let tmp = "";
-        
-    /*Опрасили пользователя и занесли его ответы в массивы */
+      
     for (let i = 0; i < 2; i++) {
-          
-      appData.tmpAnswer[i] = prompt("Введите обязательную статью расходов?");
-           
+      
+      let answer = prompt("Введите обязательную статью расходов?");
+
       while (!isNumber(tmp)) {
         tmp =  prompt("Во сколько это обойдется?");
       }
-
-      appData.tmpMoney[i] = tmp;
+      
+      appData.expenses[answer] = tmp;
       tmp = "";
-    }
 
-    /*Берем значения из массива и делаем их свойствами обьекта */
-    for (let i = 0; i < 2; i++) {
-          
-      appData.expenses[appData.tmpAnswer[i]] = appData.tmpMoney[i];
     }
 
   },
