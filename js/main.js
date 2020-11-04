@@ -37,13 +37,15 @@ let wraper = function(){
     if (!isNumber(num) && num !== null) {
       alert("Введи число");
     }
+
+    return num;
   };
 
 
   let startGame = function(){
 
     getNum();
-      
+        
     switch (true) {
       case num === null:
         alert("Игра окончена!!!");
@@ -64,12 +66,23 @@ let wraper = function(){
         break;
     }
 
-    if (tmp !== iter) {
-      tmp++;
-      return startGame();
-    }
-    else{
-      return alert("Вы исчерпали свои попытки");
+    if (tmp <= iter ) {
+
+      if (isNumber(num)) {
+
+        tmp++;
+        if (tmp <= iter) {
+          return startGame();
+        }
+        else {
+          return alert("Вы исчерпали свои попытки");
+        }
+
+      }
+      else {
+        return startGame();
+      }
+
     }
   };
 
