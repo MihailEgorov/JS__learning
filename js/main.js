@@ -1,173 +1,29 @@
 "use strict";
 
-let isNumber = function(n){
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-let money;
-
-let start = function(){
-
-  do {
-      money = prompt("Ваш месячный доход?");
-  } while (!isNumber(money));
-};
-
-start();
-
-
-let appData = {
-
-  income: {},/*доп доходы */
-  addIncome: [],/*дополнительные доходы  */
-  expenses: {},/* дополнительные расходы*/
-  addExpenses: [],/*массив с возможными расходами */
-  deposit: false,
-  percentDeposit: 0,
-  moneDeposit: 0,
-  mission: 100000,
-  period: 12,
-  budgetDay: 0,/*бюджет на день */
-  budgetMonth: 0, /*бюджет на месяц */
-  expensesMonth: 0,/*расходы за месяц */
-  expensesAmount: 0,
-
-  asking: function(){
-
-    if ( confirm("Есть ли у Вас дополнительный источник зароботка?") ) {
-      
-      let itemIncome;
-      do {
-        itemIncome = prompt("Какой у вас есть дополнительный источник дохода");
-      } while (isNumber(itemIncome));
-
-      let cashIncome;
-      do {
-        cashIncome = prompt("Сколько вы на этом зарабатываете?");
-      } while (!isNumber(cashIncome));
-      
-      appData.income[itemIncome] = cashIncome;
-    }
-
-    let addExpenses = prompt("Перечислите возможные расходы за рассчитываемый период через запятую");
-        appData.addExpenses = addExpenses.toLowerCase().split(", ");
-        appData.deposit = confirm("Есть ли у вас депозит в банке?");
-
-    let tmp = "",
-        answer;
-
-    for (let i = 0; i < 2; i++) {
-      
-      do {
-        answer = prompt("Введите обязательную статью расходов?");
-      } while (isNumber(answer));
-      
-
-      while (!isNumber(tmp)) {
-        tmp =  prompt("Во сколько это обойдется?");
-      }
-      
-      appData.expenses[answer] = tmp;
-      tmp = "";
-
-    }
-
-  },
-
-  getExpensesMonth: function(){
-
-    for (const key in appData.expenses) {
-      appData.expensesMonth += Number(appData.expenses[key]);  
-    }
-    
-    return appData.expensesMonth;
-  },
-
-  getBudget: function() {
-     appData.budgetMonth = money - appData.expensesAmount;
-     appData.budgetDay = Math.floor( appData.budgetMonth / 30 );
-
-     return appData.budgetMonth,
-            appData.budgetDay;
-  },
- 
-  getTargetMonth: function() {
-    return Math.ceil(appData.mission / appData.budgetMonth);
-  },
-
-  getStatusIncome: function(budgetDay) {
-    switch (true) {
-        case budgetDay > 1200:
-            return("У вас высокий уровень дохода");
-        case ( 600 <= budgetDay ) && ( budgetDay <= 1200 ):
-            return("У вас средний уровень дохода");
-        case ( 0 < budgetDay ) && ( budgetDay < 600):
-            return("К сожалению у вас уровень дохода ниже среднего");
-        case budgetDay < 0:
-            return("Возможно что то пошло не так");
-        case budgetDay === 0:
-            return("Трудись и у тебя все получится))");
-    }
-  },
-
-  getInfoDeposite: function(){
-    if (appData.deposit) {
-
-      do {
-        appData.percentDeposit = prompt("Какой годовой процент?");
-      } while (!isNumber(appData.percentDeposit));
-      do {
-        appData.moneDeposit = prompt("Какая сумма заложена?");
-      } while (!isNumber(appData.moneDeposit));
-      
-    }
-  },
-
-  calcSavedMoney: function(){
-    return +appData.budgetMonth * appData.period;
-  }
-
-};
-
-appData.asking();
-appData.expensesAmount = appData.getExpensesMonth();
-appData.getBudget(); 
-appData.getInfoDeposite();
-
-
-appData.addExpenses = appData.addExpenses.join(", ");
-
-let addExpensesStr = function(){
-
-   return appData.addExpenses.replace( /(^|((,)\s))\S/g, 
-   function(a) {
-    return a.toUpperCase();
-  }
-  );
-  
-};
-
-
-
-const showMessege = function(){
-
-    console.log("Месячные расходы составляют" + " " + appData.expensesMonth + " " + "рублей");
-    
-    if (appData.getTargetMonth(appData.budgetMonth) < 0) {
-      console.log('Цель не будет достигнута');
-    }else
-    {
-      console.log('Цель будет достигнута через:' + " " + appData.getTargetMonth() + " " + "месяцев");
-    }
-
-    console.log(appData.getStatusIncome( appData.budgetDay ));
-    console.log(appData.calcSavedMoney());
-    console.log("Возможные расходы: ", addExpensesStr());
-    
-    for (const key in appData) {
-      console.log("Наша программа включает в себя данные:" + " " + key + " " + "и их значения" + " " + appData[key]);
-    }
-};
-
-
-showMessege();
+let calculate = document.getElementById("start"),/*кнопка рассчитать */
+    plus1 = document.getElementsByTagName("button")[0],/*кнопка плюс */ 
+    plus2 = document.getElementsByTagName("button")[1],/*2-ая кнопка плюс */ 
+    checkBox = document.querySelector("#deposit-check"),/* есть ли депозит */
+    additiveIncome = document.querySelectorAll("additional_income-item"),/*Дополнительный доход */
+/*Правая часть */
+    budgetDay = document.getElementsByClassName("budget_day-value"),/*бюджет на день */
+    expensesMonth = document.getElementsByClassName("expenses_month-value"),/*расходы на месяц */
+    additionalIncome = document.getElementsByClassName("additional_income-value"),/*Дополнительный доход */
+    additionalExpenses = document.getElementsByClassName("additional_expenses-value"),/*дополнительные расходы */
+    incomePeriod = document.getElementsByClassName("income_period-value"),/*накопления за период */
+    targetMonth = document.getElementsByClassName("target_month-value"),/*срок достижения цели */
+    budgetMonth = document.querySelector(".budget_month-value"),/*даход за месяц */
+/*Дополнительный доход */
+    incomeTitle = document.querySelector(".income-title"),/* наименование доп дохода*/
+    incomeAmount = document.querySelector(".income-amount"),/*сумма доп дохода */
+/*Месячный доход */
+    salaryAmount = document.querySelector(".salary-amount"),/*сумма месячного дохода */ 
+/*Обязательные расходы */
+    expensesTitle = document.querySelector(".expenses-title"),/*наименование обяз расходом */
+    expensesAmount = document.querySelector(".expenses-amount"),/*сумма обяз расходов */
+/*Возможные расходы */
+    additionalExpensesItem = document.querySelector(".additional_expenses-item"),/*название возможных расходов */
+/*Цель  */
+    targetAmount = document.querySelector(".target-amount"),
+/*Период расчета */
+    periodSelect = document.querySelector(".period-select");
