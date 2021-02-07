@@ -27,3 +27,6 @@ let calculate = document.getElementById("start"),/*кнопка рассчита
     targetAmount = document.querySelector(".target-amount"),
 /*Период расчета */
     periodSelect = document.querySelector(".period-select");
+
+
+    
